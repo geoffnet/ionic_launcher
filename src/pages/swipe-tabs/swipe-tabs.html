@@ -15,7 +15,7 @@
   </ion-navbar>     
 </ion-header> -->
  
-<ion-content>
+<ion-content class="action-sheets-basic-page">
   <ion-slides #pageSlider>
     <ion-slide>
       <h1>ContentTab 1</h1>
@@ -27,4 +27,11 @@
       <h1>ContentTab 3</h1>
     </ion-slide>
   </ion-slides>
+
+  <ion-fab right edge>
+    <button ion-fab mini color="primary" (click)="openMenu()">
+      <ion-icon name="arrow-dropup"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>
