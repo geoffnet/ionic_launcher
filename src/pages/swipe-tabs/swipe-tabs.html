@@ -16,6 +16,7 @@
 </ion-header> -->
  
 <ion-content class="action-sheets-basic-page">
+
   <ion-slides #pageSlider>
     <ion-slide>
       <h1>ContentTab 1</h1>
@@ -28,10 +29,41 @@
     </ion-slide>
   </ion-slides>
 
-  <ion-fab right edge>
-    <button ion-fab mini color="primary" (click)="openMenu()">
-      <ion-icon name="arrow-dropup"></ion-icon>
+  <ion-fab bottom right>
+    <button ion-fab mini color="primary" (click)="showBottomSheet=!showBottomSheet">
+      <ion-icon [name]="showBottomSheet?'arrow-down':'arrow-up'"></ion-icon>
     </button>
   </ion-fab>
 
+  <ion-fab top right>
+    <button ion-fab mini color="secondary" (click)="showOverlay=!showOverlay">
+      <ion-icon [name]="showOverlay?'arrow-forward':'arrow-back'"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab top center>
+    <button ion-fab mini color="danger" (click)="showShade=!showShade">
+      <ion-icon [name]="showShade?'arrow-up':'arrow-down'"></ion-icon>
+    </button>
+  </ion-fab>
+    
 </ion-content>
+
+<div class="flex-container" *ngIf="showBottomSheet">
+  <div class="flex-item">
+    <h1>BottomSheet 1</h1>
+  </div>
+</div>
+
+<div class="flex-container" *ngIf="showOverlay">
+  <div class="flex-item">
+    <h1>Overlay 1</h1>
+  </div>
+</div>
+
+<div class="flex-container" *ngIf="showShade">
+  <div class="flex-item">
+    <h1>Shade 1</h1>
+  </div>
+</div>
+  

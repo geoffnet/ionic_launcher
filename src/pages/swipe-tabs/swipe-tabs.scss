@@ -1,3 +1,35 @@
 page-swipe-tabs {
 
+    .ios, .md {
+        
+        page-home {
+    
+            content-drawer {
+                background-color: #34495e !important;
+            }
+    
+            content-drawer .content {
+                padding: 20px;
+            }
+    
+        }
+    
+    }
+    
+    .flex-container {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        background-color: #9cc;
+        z-index: 100;
+        display: flex;
+        .flex-item {
+            width: 100%;
+            text-align: center;
+            align-self: center;
+        }
+    }
+    
 }
