@@ -10,6 +10,16 @@ import { SwipeTabsPage } from '../pages/swipe-tabs/swipe-tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { ContentDrawer } from '../components/content-drawer/content-drawer';
 
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import * as Hammer from 'hammerjs';
+
+// create a class that overrides hammer default config
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+    'swipe': { direction: Hammer.DIRECTION_ALL } // override default settings
+  }
+}
+
 @NgModule({
   declarations: [
     MyApp,
@@ -29,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SwipeTabsPage
   ],
   providers: [
+    { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerConfig },
     // StatusBar,
     // SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

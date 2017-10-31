@@ -23,7 +23,7 @@ page-swipe-tabs {
         left: 0;
         position: fixed;
         background-color: #9cc;
-        z-index: 100;
+        z-index: 1000;
         display: flex;
         .flex-item {
             width: 100%;

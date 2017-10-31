@@ -57,34 +57,34 @@ export class SwipeTabsPage {
   iconBottom = 'arrow-up';  
 
   toggleOverlay() {
-    console.log("showOverlay",this.showOverlay);
-    console.log("iconOverlay",this.iconOverlay);
     this.showOverlay = (this.showOverlay=='visible')?'invisible':'visible';
     this.iconOverlay = (this.iconOverlay=='arrow-back')?'arrow-forward':'arrow-back';
     this.showBottom = 'invisible';
     this.showShade = 'invisible';
     this.iconShade = 'arrow-down';
     this.iconBottom = 'arrow-up';
+    console.log("showOverlay",this.showOverlay);
+    console.log("iconOverlay",this.iconOverlay);    
   }
 
   toggleBottom() {
-    console.log("showBottom",this.showBottom);
     this.showBottom = (this.showBottom=='visible')?'invisible':'visible';
     this.iconBottom = (this.iconBottom=='arrow-down')?'arrow-up':'arrow-down';
     this.showOverlay = 'invisible';
     this.iconOverlay = 'arrow-back';
     this.showShade = 'invisible';
     this.iconShade = 'arrow-down';
+    console.log("showBottom",this.showBottom);
   }
 
   toggleShade() {
-    console.log("showShade",this.showShade);
     this.showShade = (this.showShade=='visible')?'invisible':'visible';
     this.iconShade = (this.iconShade=='arrow-up')?'arrow-down':'arrow-up';
     this.showOverlay = 'invisible';
     this.iconOverlay = 'arrow-back';
     this.showBottom = 'invisible';
     this.iconBottom = 'arrow-up';    
+    console.log("showShade",this.showShade);
   }
 
   @ViewChild('pageSlider') pageSlider: Slides;
