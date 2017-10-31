@@ -117,4 +117,32 @@ export class SwipeTabsPage {
     this.tabs = $event._snapIndex.toString();    
 	}
 
+  swipeLeftOverlayEvent(e){
+    if ((e.direction) == 2) {
+      console.log("swipe left",e.direction);
+      this.toggleOverlay();
+    }
+  }
+
+  swipeRightOverlayEvent(e){
+    if ((e.direction) == 4) {
+      console.log("swipe right",e.direction);
+      this.toggleOverlay();
+    }
+  }
+
+  swipeUpShadeEvent(e){
+    if ((e.direction) == 8) {
+      console.log("swipe up",e.direction);
+      this.toggleShade();
+    }
+  }
+
+  swipeDownBottomEvent(e){
+    if ((e.direction) == 16) {
+      console.log("swipe left",e.direction);
+      this.toggleBottom();
+    }
+  }  
+
 }

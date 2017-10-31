@@ -43,6 +43,7 @@
   </ion-fab> -->
 
   <ion-fab top right>
+    <!-- <button ion-fab mini color="secondary" (swipe)="swipeLeftOverlayEvent($event)">           -->
     <button ion-fab mini color="secondary" (click)="toggleOverlay()">
       <ion-icon [name]="'arrow-back'" *ngIf="iconOverlay=='arrow-back'"></ion-icon>
       <ion-icon [name]="'arrow-forward'" *ngIf="iconOverlay=='arrow-forward'"></ion-icon>
@@ -58,19 +59,19 @@
     
 </ion-content>
 
-<div class="flex-container" [@bottomVisibility]="showBottom">
+<div class="flex-container" [@bottomVisibility]="showBottom" (swipe)="swipeDownBottomEvent($event)">
   <div class="flex-item">
     <h1>BottomSheet 1</h1>
   </div>
 </div>
 
-<div class="flex-overlay" [@overlayVisibility]="showOverlay">
+<div class="flex-overlay" [@overlayVisibility]="showOverlay" (swipe)="swipeRightOverlayEvent($event)">
   <div class="flex-item">
     <h1>Overlay 1</h1>
   </div>
 </div>
 
-<div class="flex-container" [@shadeVisibility]="showShade">
+<div class="flex-container" [@shadeVisibility]="showShade" (swipe)="swipeUpShadeEvent($event)">
   <div class="flex-item">
     <h1>Shade 1</h1>
   </div>
