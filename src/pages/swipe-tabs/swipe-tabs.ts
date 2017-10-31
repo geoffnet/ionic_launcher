@@ -43,14 +43,23 @@ import {
       transition('visible => invisible', animate('200ms ease-in-out')),
       transition('invisible => visible', animate('300ms ease-in-out'))
     ]),
-    trigger('notificationVisibility', [
+    trigger('notificationSwipedLeft', [
       state('visible', style({
         transform: 'translate3d(0,0,0)'
       })),
-      state('invisible', style({
+      state('swipedLeft', style({
         transform: 'translate3d(-100%,0,0)'
       })),
-      transition('visible => invisible', animate('120ms ease-in-out'))
+      transition('visible => swipedLeft', animate('120ms ease-in-out'))
+    ]),
+    trigger('notificationSwipedRight', [
+      state('visible', style({
+        transform: 'translate3d(0,0,0)'
+      })),
+      state('swipedRight', style({
+        transform: 'translate3d(100%,0,0)'
+      })),
+      transition('visible => swipedRight', animate('120ms ease-in-out'))
     ]),    
   ]
 
@@ -131,9 +140,14 @@ export class SwipeTabsPage {
     
   }
 
-  removeNotification(item) {
-    console.log("item swiped", item);
-    item.showNotification = 'invisible';
+  swipeNotification(e,item){
+    if ((e.direction) == 2) {
+      console.log("swipe left",e.direction);
+      item.showNotification = 'swipedLeft';
+    } else if ((e.direction) == 4) {
+      console.log("swipe right",e.direction);
+      item.showNotification = 'swipedRight';      
+    }
     let items = this.items;
     let index = items.indexOf(item);    
     setTimeout(function(){
