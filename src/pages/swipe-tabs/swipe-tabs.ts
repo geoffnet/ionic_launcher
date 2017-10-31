@@ -1,5 +1,5 @@
-import { Component, ViewChild, Input, ElementRef, Renderer } from '@angular/core';
-import { NavController, NavParams, Slides, Platform, ActionSheetController, DomController } from 'ionic-angular';
+import { Component, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { NavController, NavParams, Slides, DomController } from 'ionic-angular';
 import {
   trigger,
   state,
@@ -12,6 +12,17 @@ import {
   selector: 'page-swipe-tabs',
   templateUrl: 'swipe-tabs.html',
   animations: [
+    trigger('shadeVisibility', [
+      state('visible', style({
+        transform: 'translate3d(0,0,0)'
+      })),
+      state('invisible', style({
+        transform: 'translate3d(0,-100%,0)'
+      })),
+      transition('visible => invisible', animate('100ms ease-in-out')),
+      transition('invisible => visible', animate('300ms ease-in-out'))      
+      // transition('* => *', animate('400ms ease-in-out'))
+    ]),    
     trigger('overlayVisibility', [
       state('visible', style({
         transform: 'translate3d(0,0,0)'
@@ -30,35 +41,13 @@ import {
         transform: 'translate3d(0,100%,0)'
       })),
       transition('visible => invisible', animate('100ms ease-in-out')),
-      transition('invisible => visible', animate('300ms ease-in-out'))      
-      // transition('* => *', animate('400ms ease-in-out'))
+      transition('invisible => visible', animate('300ms ease-in-out'))
     ]),
-    trigger('shadeVisibility', [
-      state('visible', style({
-        transform: 'translate3d(0,0,0)'
-      })),
-      state('invisible', style({
-        transform: 'translate3d(0,-100%,0)'
-      })),
-      transition('visible => invisible', animate('100ms ease-in-out')),
-      transition('invisible => visible', animate('300ms ease-in-out'))      
-      // transition('* => *', animate('400ms ease-in-out'))
-    ]),        
   ]
 
 })
 
 export class SwipeTabsPage {
-
-  @Input('options') options: any;
-  handleHeight: number = 50;
-  bounceBack: boolean = true;
-  thresholdTop: number = 200;
-  thresholdBottom: number = 200;
-
-  @ViewChild('pageSlider') pageSlider: Slides; 
-  tabs:any = '1';
-  currentIndex:any = '2';
 
   showOverlay = 'invisible';
   showBottom = 'invisible';
@@ -98,11 +87,13 @@ export class SwipeTabsPage {
     this.iconBottom = 'arrow-up';    
   }
 
+  @ViewChild('pageSlider') pageSlider: Slides;
+  tabs:any = '1';
+  currentIndex:any = '1';
+
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public platform: Platform,
-    public actionSheetCtrl: ActionSheetController,
+    public navParams: NavParams,
     public element: ElementRef, 
     public renderer: Renderer, 
     public domCtrl: DomController    
@@ -110,7 +101,10 @@ export class SwipeTabsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SwipeTabsPage');
+    this.tabs = '1';
+    this.currentIndex = '1';
   }
+
   selectTab(index) {
     this.pageSlider.slideTo(index);
   }
@@ -121,53 +115,6 @@ export class SwipeTabsPage {
 		console.log('Current index is', currentIndex);
     console.log('Current tab is', tabs);
     this.tabs = $event._snapIndex.toString();    
-	}		
-  
-  openMenu() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Applications',
-      cssClass: 'action-sheets-basic-page',
-      buttons: [
-        {
-          text: 'Delete',
-          role: 'destructive',
-          icon: !this.platform.is('ios') ? 'trash' : null,
-          handler: () => {
-            console.log('Delete clicked');
-          }
-        },
-        {
-          text: 'Share',
-          icon: !this.platform.is('ios') ? 'share' : null,
-          handler: () => {
-            console.log('Share clicked');
-          }
-        },
-        {
-          text: 'Play',
-          icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
-          handler: () => {
-            console.log('Play clicked');
-          }
-        },
-        {
-          text: 'Favorite',
-          icon: !this.platform.is('ios') ? 'heart-outline' : null,
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel', // will always sort to be on the bottom
-          icon: !this.platform.is('ios') ? 'close' : null,
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
-    actionSheet.present();
-  }
+	}
 
 }
