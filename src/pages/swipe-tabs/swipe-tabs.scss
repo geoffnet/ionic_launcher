@@ -21,7 +21,7 @@ page-swipe-tabs {
         height: 100%;
         top: 0;
         left: 0;
-        position: absolute;
+        position: fixed;
         background-color: #9cc;
         z-index: 100;
         display: flex;
@@ -31,5 +31,23 @@ page-swipe-tabs {
             align-self: center;
         }
     }
-    
+
+    .flex-overlay {
+        width: 30%;
+        min-width: 250px;
+        height: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: auto;
+        position: fixed;
+        background-color: #9cc;
+        z-index: 100;
+        display: flex;
+        .flex-item {
+            width: 100%;
+            text-align: center;
+            align-self: center;
+        }
+    }
 }

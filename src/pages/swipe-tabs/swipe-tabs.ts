@@ -1,20 +1,111 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Slides, Platform, ActionSheetController } from 'ionic-angular';
+import { Component, ViewChild, Input, ElementRef, Renderer } from '@angular/core';
+import { NavController, NavParams, Slides, Platform, ActionSheetController, DomController } from 'ionic-angular';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations/';
 
 @Component({
   selector: 'page-swipe-tabs',
   templateUrl: 'swipe-tabs.html',
+  animations: [
+    trigger('overlayVisibility', [
+      state('visible', style({
+        transform: 'translate3d(0,0,0)'
+      })),
+      state('invisible', style({
+        transform: 'translate3d(100%,0,0)'
+      })),
+      transition('visible => invisible', animate('100ms ease-in-out')),
+      transition('invisible => visible', animate('300ms ease-in-out'))
+    ]),
+    trigger('bottomVisibility', [
+      state('visible', style({
+        transform: 'translate3d(0,0,0)'
+      })),
+      state('invisible', style({
+        transform: 'translate3d(0,100%,0)'
+      })),
+      transition('visible => invisible', animate('100ms ease-in-out')),
+      transition('invisible => visible', animate('300ms ease-in-out'))      
+      // transition('* => *', animate('400ms ease-in-out'))
+    ]),
+    trigger('shadeVisibility', [
+      state('visible', style({
+        transform: 'translate3d(0,0,0)'
+      })),
+      state('invisible', style({
+        transform: 'translate3d(0,-100%,0)'
+      })),
+      transition('visible => invisible', animate('100ms ease-in-out')),
+      transition('invisible => visible', animate('300ms ease-in-out'))      
+      // transition('* => *', animate('400ms ease-in-out'))
+    ]),        
+  ]
+
 })
 
 export class SwipeTabsPage {
+
+  @Input('options') options: any;
+  handleHeight: number = 50;
+  bounceBack: boolean = true;
+  thresholdTop: number = 200;
+  thresholdBottom: number = 200;
+
   @ViewChild('pageSlider') pageSlider: Slides; 
-  tabs: any = '0';
+  tabs:any = '1';
+  currentIndex:any = '2';
+
+  showOverlay = 'invisible';
+  showBottom = 'invisible';
+  showShade = 'invisible';
+  iconOverlay = 'arrow-back';
+  iconShade = 'arrow-down';
+  iconBottom = 'arrow-up';  
+
+  toggleOverlay() {
+    console.log("showOverlay",this.showOverlay);
+    console.log("iconOverlay",this.iconOverlay);
+    this.showOverlay = (this.showOverlay=='visible')?'invisible':'visible';
+    this.iconOverlay = (this.iconOverlay=='arrow-back')?'arrow-forward':'arrow-back';
+    this.showBottom = 'invisible';
+    this.showShade = 'invisible';
+    this.iconShade = 'arrow-down';
+    this.iconBottom = 'arrow-up';
+  }
+
+  toggleBottom() {
+    console.log("showBottom",this.showBottom);
+    this.showBottom = (this.showBottom=='visible')?'invisible':'visible';
+    this.iconBottom = (this.iconBottom=='arrow-down')?'arrow-up':'arrow-down';
+    this.showOverlay = 'invisible';
+    this.iconOverlay = 'arrow-back';
+    this.showShade = 'invisible';
+    this.iconShade = 'arrow-down';
+  }
+
+  toggleShade() {
+    console.log("showShade",this.showShade);
+    this.showShade = (this.showShade=='visible')?'invisible':'visible';
+    this.iconShade = (this.iconShade=='arrow-up')?'arrow-down':'arrow-up';
+    this.showOverlay = 'invisible';
+    this.iconOverlay = 'arrow-back';
+    this.showBottom = 'invisible';
+    this.iconBottom = 'arrow-up';    
+  }
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public platform: Platform,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public element: ElementRef, 
+    public renderer: Renderer, 
+    public domCtrl: DomController    
   ) {}  
 
   ionViewDidLoad() {
@@ -24,6 +115,14 @@ export class SwipeTabsPage {
     this.pageSlider.slideTo(index);
   }
 
+	slideChanged($event) {
+		let currentIndex = this.pageSlider.getActiveIndex();
+		let tabs = currentIndex;
+		console.log('Current index is', currentIndex);
+    console.log('Current tab is', tabs);
+    this.tabs = $event._snapIndex.toString();    
+	}		
+  
   openMenu() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Applications',

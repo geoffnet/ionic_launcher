@@ -2,13 +2,13 @@
   <ion-navbar>
     <ion-segment color="dark" [(ngModel)]="tabs">
       <ion-segment-button (click)="selectTab(0)"
-                          value="0">
+                          value=0>Tab 0
       </ion-segment-button>
       <ion-segment-button (click)="selectTab(1)"
-                            value="1">
+                            value=1>Tab 1
       </ion-segment-button>
       <ion-segment-button (click)="selectTab(2)"
-                          value="2">
+                          value=2>Tab 2
       </ion-segment-button>
       <div id="slide" class="slide"></div>
     </ion-segment>                                               
@@ -17,7 +17,7 @@
  
 <ion-content class="action-sheets-basic-page">
 
-  <ion-slides #pageSlider>
+  <ion-slides #pageSlider (ionSlideDidChange)="slideChanged($event)">
     <ion-slide>
       <h1>ContentTab 1</h1>
     </ion-slide>
@@ -29,39 +29,48 @@
     </ion-slide>
   </ion-slides>
 
-  <ion-fab bottom right>
-    <button ion-fab mini color="primary" (click)="showBottomSheet=!showBottomSheet">
-      <ion-icon [name]="showBottomSheet?'arrow-down':'arrow-up'"></ion-icon>
+  <ion-fab bottom center>
+    <button ion-fab mini color="primary" (click)="toggleBottom()">
+        <ion-icon [name]="'arrow-up'" *ngIf="iconBottom=='arrow-up'"></ion-icon>
+        <ion-icon [name]="'arrow-down'" *ngIf="iconBottom=='arrow-down'"></ion-icon>  
     </button>
   </ion-fab>
 
-  <ion-fab top right>
-    <button ion-fab mini color="secondary" (click)="showOverlay=!showOverlay">
+  <!-- <ion-fab top right>
+    <button ion-fab mini color="secondary" (click)="showOverlay=!showOverlay;">
       <ion-icon [name]="showOverlay?'arrow-forward':'arrow-back'"></ion-icon>
     </button>
-  </ion-fab>
+  </ion-fab> -->
+
+  <ion-fab top right>
+    <button ion-fab mini color="secondary" (click)="toggleOverlay()">
+      <ion-icon [name]="'arrow-back'" *ngIf="iconOverlay=='arrow-back'"></ion-icon>
+      <ion-icon [name]="'arrow-forward'" *ngIf="iconOverlay=='arrow-forward'"></ion-icon>
+    </button>
+  </ion-fab>  
 
   <ion-fab top center>
-    <button ion-fab mini color="danger" (click)="showShade=!showShade">
-      <ion-icon [name]="showShade?'arrow-up':'arrow-down'"></ion-icon>
+    <button ion-fab mini color="danger" (click)="toggleShade()">
+      <ion-icon [name]="'arrow-down'" *ngIf="iconShade=='arrow-down'"></ion-icon>
+      <ion-icon [name]="'arrow-up'" *ngIf="iconShade=='arrow-up'"></ion-icon>
     </button>
   </ion-fab>
     
 </ion-content>
 
-<div class="flex-container" *ngIf="showBottomSheet">
+<div class="flex-container" [@bottomVisibility]="showBottom">
   <div class="flex-item">
     <h1>BottomSheet 1</h1>
   </div>
 </div>
 
-<div class="flex-container" *ngIf="showOverlay">
+<div class="flex-overlay" [@overlayVisibility]="showOverlay">
   <div class="flex-item">
     <h1>Overlay 1</h1>
   </div>
 </div>
 
-<div class="flex-container" *ngIf="showShade">
+<div class="flex-container" [@shadeVisibility]="showShade">
   <div class="flex-item">
     <h1>Shade 1</h1>
   </div>
