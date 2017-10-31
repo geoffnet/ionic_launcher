@@ -29,13 +29,6 @@
     </ion-slide>
   </ion-slides>
 
-  <ion-fab bottom center>
-    <button ion-fab mini color="primary" (click)="toggleBottom()">
-        <ion-icon [name]="'arrow-up'" *ngIf="iconBottom=='arrow-up'"></ion-icon>
-        <ion-icon [name]="'arrow-down'" *ngIf="iconBottom=='arrow-down'"></ion-icon>  
-    </button>
-  </ion-fab>
-
   <!-- <ion-fab top right>
     <button ion-fab mini color="secondary" (click)="showOverlay=!showOverlay;">
       <ion-icon [name]="showOverlay?'arrow-forward':'arrow-back'"></ion-icon>
@@ -48,32 +41,60 @@
       <ion-icon [name]="'arrow-back'" *ngIf="iconOverlay=='arrow-back'"></ion-icon>
       <ion-icon [name]="'arrow-forward'" *ngIf="iconOverlay=='arrow-forward'"></ion-icon>
     </button>
-  </ion-fab>  
+  </ion-fab>
 
-  <ion-fab top center>
+  <!-- <ion-fab top center>
     <button ion-fab mini color="danger" (click)="toggleShade()">
       <ion-icon [name]="'arrow-down'" *ngIf="iconShade=='arrow-down'"></ion-icon>
       <ion-icon [name]="'arrow-up'" *ngIf="iconShade=='arrow-up'"></ion-icon>
     </button>
-  </ion-fab>
-    
+  </ion-fab> -->
+
+  <header (swipedown)="toggleShade()"></header>
+
+  <!-- <ion-fab bottom center>
+    <button ion-fab mini color="primary" (click)="toggleBottom()">
+        <ion-icon [name]="'arrow-up'" *ngIf="iconBottom=='arrow-up'"></ion-icon>
+        <ion-icon [name]="'arrow-down'" *ngIf="iconBottom=='arrow-down'"></ion-icon>  
+    </button>
+  </ion-fab> -->
+
+  <footer (swipeup)="toggleBottom()"></footer>
+      
 </ion-content>
 
-<div class="flex-container" [@bottomVisibility]="showBottom" (swipe)="swipeDownBottomEvent($event)">
+<div class="flex-shade" [@shadeVisibility]="showShade" (swipeup)="toggleShade()">
   <div class="flex-item">
-    <h1>BottomSheet 1</h1>
+    <!-- <ion-scroll> -->
+      <ion-list>
+        <ion-list-header>
+          <ion-icon name="notifications" item-start></ion-icon> Notifications
+        </ion-list-header>
+        <ion-item *ngFor="let item of items" [@notificationVisibility]="item.showNotification" (swipeleft)="removeNotification(item)">
+          {{ item.name }}
+        </ion-item>
+      </ion-list>
+    <!-- </ion-scroll> -->
+  </div>
+</div>  
+
+<div class="flex-bottom" [@bottomVisibility]="showBottom" (swipedown)="toggleBottom()">
+  <div class="flex-item">
+    <ion-list-header>
+      <ion-icon name="apps" item-start></ion-icon> Applications
+    </ion-list-header>  
+    <ion-content padding>
+      <ul class="tile-container">
+        <li class="tile" *ngFor="let app of apps">
+          <span>{{app.name}}</span>
+        </li>
+      </ul>
+    </ion-content>
   </div>
 </div>
 
-<div class="flex-overlay" [@overlayVisibility]="showOverlay" (swipe)="swipeRightOverlayEvent($event)">
+<div class="flex-overlay" [@overlayVisibility]="showOverlay" (swiperight)="toggleOverlay()">
   <div class="flex-item">
-    <h1>Overlay 1</h1>
+    <h1>Overlay</h1>
   </div>
-</div>
-
-<div class="flex-container" [@shadeVisibility]="showShade" (swipe)="swipeUpShadeEvent($event)">
-  <div class="flex-item">
-    <h1>Shade 1</h1>
-  </div>
-</div>
-  
+</div>  
