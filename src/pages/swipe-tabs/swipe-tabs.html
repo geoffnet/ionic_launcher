@@ -17,16 +17,10 @@
  
 <ion-content class="action-sheets-basic-page">
 
-  <ion-slides #pageSlider (ionSlideDidChange)="slideChanged($event)">
-    <ion-slide>
-      <h1>ContentTab 1</h1>
-    </ion-slide>
-    <ion-slide>
-      <h1>ContentTab 2</h1>
-    </ion-slide>
-    <ion-slide>
-      <h1>ContentTab 3</h1>
-    </ion-slide>
+  <ion-slides #pageSlider (ionSlideDidChange)="slideChanged($event)" (swipeup)="toggleBottom()">
+    <ion-slide></ion-slide>
+    <ion-slide></ion-slide>
+    <ion-slide></ion-slide>
   </ion-slides>
 
   <ion-fab top right>
@@ -37,7 +31,6 @@
     </button>
   </ion-fab>
   <header (swipedown)="toggleShade()"></header>
-  <footer (swipeup)="toggleBottom()"></footer>
       
 </ion-content>
 
@@ -45,9 +38,19 @@
   <div class="flex-item">
     <!-- <ion-scroll> -->
       <ion-list>
-        <ion-list-header>
+        <ul class="flex-shade-header">
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_wifi.png"/></li>
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_location.png"/></li>
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_mute.png"/></li>
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_portrait_lock.png"/></li>
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_airplane_mode.png"/></li>
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_bluetooth.png"/></li>
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_flashlight.png"/></li>
+          <li class="flex-shade-icon"><img src="../../assets/icon/ic_data.png"/></li>            
+        </ul>
+        <!-- <ion-list-header>
           <ion-icon name="notifications" item-start></ion-icon> Notifications
-        </ion-list-header>
+        </ion-list-header> -->
         <ion-item *ngFor="let item of items" [@notificationSwipedLeft]="item.showNotification" [@notificationSwipedRight]="item.showNotification" (swipe)="swipeNotification($event,item)">
           {{ item.name }}
         </ion-item>
@@ -64,7 +67,10 @@
     <ion-content padding>
       <ul class="tile-container">
         <li class="tile" *ngFor="let app of apps">
-          <span>{{app.name}}</span>
+          <span>
+            <img src={{app.imagePath}}/>
+            <p>{{(app.name.length>6)? (app.name | slice:0:6)+'...':app.name}}</p>
+          </span>
         </li>
       </ul>
     </ion-content>
