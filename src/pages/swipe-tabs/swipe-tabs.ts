@@ -1,12 +1,6 @@
 import { Component, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { NavController, NavParams, Slides, DomController } from 'ionic-angular';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations/';
+import { trigger, state, style, animate, transition } from '@angular/animations/';
 
 @Component({
   selector: 'page-swipe-tabs',
@@ -82,29 +76,23 @@ export class SwipeTabsPage {
     this.iconOverlay = (this.iconOverlay=='arrow-back')?'arrow-forward':'arrow-back';
     this.showBottom = 'invisible';
     this.showShade = 'invisible';
-    this.iconShade = 'arrow-down';
-    this.iconBottom = 'arrow-up';
     console.log("showOverlay",this.showOverlay);
     console.log("iconOverlay",this.iconOverlay);    
   }
 
   toggleBottom() {
     this.showBottom = (this.showBottom=='visible')?'invisible':'visible';
-    this.iconBottom = (this.iconBottom=='arrow-down')?'arrow-up':'arrow-down';
     this.showOverlay = 'invisible';
     this.iconOverlay = 'arrow-back';
     this.showShade = 'invisible';
-    this.iconShade = 'arrow-down';
     console.log("showBottom",this.showBottom);
   }
 
   toggleShade() {
     this.showShade = (this.showShade=='visible')?'invisible':'visible';
-    this.iconShade = (this.iconShade=='arrow-up')?'arrow-down':'arrow-up';
     this.showOverlay = 'invisible';
     this.iconOverlay = 'arrow-back';
     this.showBottom = 'invisible';
-    this.iconBottom = 'arrow-up';    
     console.log("showShade",this.showShade);
   }
 
@@ -208,12 +196,8 @@ export class SwipeTabsPage {
         imagePath: '../../assets/icon/app_reminder.png',
       },
       {
-        name: 'samsung_health',
+        name: 'samsung health',
         imagePath: '../../assets/icon/app_samsung_health.png',
-      },
-      {
-        name: 'settings',
-        imagePath: '../../assets/icon/app_settings.png',
       },
       {
         name: 'settings',
@@ -224,11 +208,11 @@ export class SwipeTabsPage {
         imagePath: '../../assets/icon/app_slack.png',
       },
       {
-        name: 'smart_manager',
+        name: 'smart manager',
         imagePath: '../../assets/icon/app_smart_manager.png',
       },
       {
-        name: 'smart_switch',
+        name: 'smart switch',
         imagePath: '../../assets/icon/app_smart_switch.png',
       },
       {
@@ -248,7 +232,7 @@ export class SwipeTabsPage {
         imagePath: '../../assets/icon/app_videos.png',
       },
       {
-        name: 'voice_recorder',
+        name: 'voice recorder',
         imagePath: '../../assets/icon/app_voice_recorder.png',
       },
       {
@@ -266,15 +250,15 @@ export class SwipeTabsPage {
   }
 
   swipeNotification(e,item){
-    if ((e.direction) == 2) {
+    if ((e.direction) === 2) {
       console.log("swipe left",e.direction);
       item.showNotification = 'swipedLeft';
     };
-    if ((e.direction) == 4) {
+    if ((e.direction) === 4) {
       console.log("swipe right",e.direction);
       item.showNotification = 'swipedRight';      
     };
-    if ((e.direction) == 2 || (e.direction) == 4) {
+    if ((e.direction) === 2 || (e.direction) === 4) {
       let items = this.items;
       let index = items.indexOf(item);    
       setTimeout(function(){
@@ -302,6 +286,7 @@ export class SwipeTabsPage {
 		console.log('Current index is', currentIndex);
     console.log('Current tab is', tabs);
     this.tabs = $event._snapIndex.toString();    
+    this.showShade = 'invisible';
 	}
 
 }
