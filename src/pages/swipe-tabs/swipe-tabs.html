@@ -48,8 +48,9 @@
     <li class="shade-icon" tappable><img src="../../assets/icon/ic_flashlight.png"/></li>
     <li class="shade-icon" tappable><img src="../../assets/icon/ic_data.png"/></li>            
   </ul>
-  <ion-list>
-    <ion-scroll>
+
+  <ion-scroll scrollY="true">
+    <ion-list scroll="true">
       <ion-item *ngFor="let item of items" [@notificationSwipedLeft]="item.showNotification" [@notificationSwipedRight]="item.showNotification" (swipe)="swipeNotification($event,item)">
         <ion-avatar item-end>
           <img src="../../assets/imgs/logo.png"/>
@@ -57,14 +58,14 @@
         <h2>{{ item.name }}</h2>
         <p>Secondary line text</p>
       </ion-item>
-    </ion-scroll>    
-  </ion-list>
+    </ion-list>
+  </ion-scroll>
+
 </div>  
 
 <div class="flex-bottom" [@bottomVisibility]="showBottom" (swipedown)="toggleBottom()">
   <div class="flex-item">
     <ion-list-header>
-      <!-- <ion-icon name="apps" item-start></ion-icon>  -->
       Applications
     </ion-list-header>  
     <ion-content>
@@ -80,9 +81,9 @@
   </div>
 </div>
 
-<div class="overlay" [@overlayVisibility]="showOverlay" (swiperight)="toggleOverlay()">
+<div class="overlay" [@overlayVisibility]="showOverlay">
   <ion-content>
-    <ion-list-header>
+    <ion-list-header (swiperight)="toggleOverlay()">
       <ion-icon item-start small name="settings"></ion-icon>          
       Settings
     </ion-list-header>
@@ -100,11 +101,6 @@
         </ion-range>
       </ion-item>
     </ion-list>
-    <ion-list>
-      <ion-list-header>
-        <ion-icon item-start small name="settings"></ion-icon>          
-        Adjust Text
-      </ion-list-header>
-    </ion-list>
   </ion-content>
+  <div class="footer" (swiperight)="toggleOverlay()"></div>
 </div>  
