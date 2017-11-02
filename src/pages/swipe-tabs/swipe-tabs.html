@@ -23,11 +23,26 @@
     <ion-slide></ion-slide>
   </ion-slides>
 
-  <ion-fab>
+  <ion-fab top left>
+    <button ion-fab mini color="secondary" (click)="toggleShade()">
+        <ion-icon [name]="'arrow-down'" *ngIf="iconShade=='arrow-down'"></ion-icon>
+        <ion-icon [name]="'arrow-up'" *ngIf="iconShade=='arrow-up'"></ion-icon>  
+    </button>
+  </ion-fab>
+
+  <ion-fab bottom left>
+    <button ion-fab mini color="danger" (click)="toggleBottom()">
+        <ion-icon [name]="'arrow-up'" *ngIf="iconBottom=='arrow-up'"></ion-icon>
+        <ion-icon [name]="'arrow-down'" *ngIf="iconBottom=='arrow-down'"></ion-icon>
+    </button>
+  </ion-fab>  
+
+  <ion-fab class="overlay-btn">
     <!-- <button ion-fab mini color="secondary" (swipe)="swipeLeftOverlayEvent($event)"> -->
     <button ion-fab mini color="primary" (swipeleft)="toggleOverlay()">
-      <ion-icon [name]="'arrow-dropleft'" *ngIf="iconOverlay=='arrow-back'"></ion-icon>
-      <ion-icon [name]="'arrow-dropright'" *ngIf="iconOverlay=='arrow-forward'"></ion-icon>
+      <ion-icon [name]="'arrow-dropleft'" style="position:relative;right:4px"></ion-icon>
+      <!-- <ion-icon [name]="'arrow-dropleft'" *ngIf="iconOverlay=='arrow-back'"></ion-icon>
+      <ion-icon [name]="'arrow-dropright'" *ngIf="iconOverlay=='arrow-forward'"></ion-icon> -->
     </button>
   </ion-fab>
   <header (swipedown)="toggleShade()"></header>
@@ -35,7 +50,7 @@
 </ion-content>
 
 <div class="shade" [@shadeVisibility]="showShade" (swipeup)="toggleShade()">
-  <div class="timestamp">
+  <div class="timestamp" tappable (click)="toggleShade()">
     12:30 PM Tue, October 31
   </div>
   <ul class="shade-header">
@@ -65,14 +80,14 @@
 
 <div class="flex-bottom" [@bottomVisibility]="showBottom" (swipedown)="toggleBottom()">
   <div class="flex-item">
-    <ion-list-header>
+    <ion-list-header tappable (click)="toggleBottom()">
       Applications
     </ion-list-header>  
     <ion-content>
-      <ion-scroll>
+      <ion-scroll scrollY="true">
         <ul class="tile-container">
           <li class="tile" *ngFor="let app of apps">
-            <img src={{app.imagePath}}/>
+            <img [src]="app.imagePath"/>
             <p>{{(app.name.length>9)? (app.name | slice:0:9)+'...':app.name}}</p>
           </li>
         </ul>
