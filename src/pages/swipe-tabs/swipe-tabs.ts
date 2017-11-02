@@ -14,7 +14,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations/
         transform: 'translate3d(0,-100%,0)'
       })),
       transition('visible => invisible', animate('200ms ease-in-out')),
-      transition('invisible => visible', animate('300ms ease-in-out'))      
+      transition('invisible => visible', animate('300ms ease-in-out'))
       // transition('* => *', animate('400ms ease-in-out'))
     ]),
     trigger('overlayVisibility', [
@@ -64,26 +64,20 @@ export class SwipeTabsPage {
   showOverlay = 'invisible';
   showBottom = 'invisible';
   showShade = 'invisible';
-  iconOverlay = 'arrow-back';
-  iconShade = 'arrow-down';
-  iconBottom = 'arrow-up';
   showNotification = 'visible';
 
   items: any[];
 
   toggleOverlay() {
     this.showOverlay = (this.showOverlay=='visible')?'invisible':'visible';
-    this.iconOverlay = (this.iconOverlay=='arrow-back')?'arrow-forward':'arrow-back';
     this.showBottom = 'invisible';
     this.showShade = 'invisible';
     console.log("showOverlay",this.showOverlay);
-    console.log("iconOverlay",this.iconOverlay);    
   }
 
   toggleBottom() {
     this.showBottom = (this.showBottom=='visible')?'invisible':'visible';
     this.showOverlay = 'invisible';
-    this.iconOverlay = 'arrow-back';
     this.showShade = 'invisible';
     console.log("showBottom",this.showBottom);
   }
@@ -91,10 +85,30 @@ export class SwipeTabsPage {
   toggleShade() {
     this.showShade = (this.showShade=='visible')?'invisible':'visible';
     this.showOverlay = 'invisible';
-    this.iconOverlay = 'arrow-back';
     this.showBottom = 'invisible';
     console.log("showShade",this.showShade);
   }
+
+  swipeNotification(e,item){
+    if ((e.direction) === 2) {
+      console.log("swipe left",e.direction);
+      item.showNotification = 'swipedLeft';
+    };
+    if ((e.direction) === 4) {
+      console.log("swipe right",e.direction);
+      item.showNotification = 'swipedRight';      
+    };
+    if ((e.direction) === 2 || (e.direction) === 4) {
+      let items = this.items;
+      let index = items.indexOf(item);    
+      setTimeout(function(){
+        console.log('index:',index);
+        if(index > -1){
+          items.splice(index, 1);
+        }
+      }, 150);
+    }
+  }  
 
   @ViewChild('pageSlider') pageSlider: Slides;
   tabs:any = '2';
@@ -247,27 +261,6 @@ export class SwipeTabsPage {
     //   });
     // }
     
-  }
-
-  swipeNotification(e,item){
-    if ((e.direction) === 2) {
-      console.log("swipe left",e.direction);
-      item.showNotification = 'swipedLeft';
-    };
-    if ((e.direction) === 4) {
-      console.log("swipe right",e.direction);
-      item.showNotification = 'swipedRight';      
-    };
-    if ((e.direction) === 2 || (e.direction) === 4) {
-      let items = this.items;
-      let index = items.indexOf(item);    
-      setTimeout(function(){
-        console.log('index:',index);
-        if(index > -1){
-          items.splice(index, 1);
-        }
-      }, 150);
-    }
   }
 
   ionViewDidLoad() {

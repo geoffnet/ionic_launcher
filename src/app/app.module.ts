@@ -5,7 +5,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 // import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-// import { HomePage } from '../pages/home/home';
 import { SwipeTabsPage } from '../pages/swipe-tabs/swipe-tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -24,7 +23,6 @@ export class MyHammerConfig extends HammerGestureConfig  {
 @NgModule({
   declarations: [
     MyApp,
-    // HomePage,
     SwipeTabsPage,
   ],
   imports: [
@@ -35,7 +33,6 @@ export class MyHammerConfig extends HammerGestureConfig  {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    // HomePage,
     SwipeTabsPage
   ],
   providers: [
